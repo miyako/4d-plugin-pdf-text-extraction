@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="4D Plugin API\4DPluginAPI.c">
+      <Filter>4D Plugin API</Filter>
+    </ClCompile>
+    <ClCompile Include="4DPlugin-PDF-Text-Extraction.cpp" />
+    <ClCompile Include="4D Plugin API\Classes\C_TEXT.cpp" />
+    <ClCompile Include="lib\pdf-writer-enhancers\Bytes.cpp" />
+    <ClCompile Include="lib\text-placements\TextPlacementsCollector.cpp" />
+    <ClCompile Include="lib\text-placements\TPCollectionState.cpp" />
+    <ClCompile Include="lib\text-placements\Transformations.cpp" />
+    <ClCompile Include="lib\TextExtraction.cpp" />
+    <ClCompile Include="lib\bidi\BidiConversion.cpp" />
+    <ClCompile Include="lib\font-translation\Encoding.cpp" />
+    <ClCompile Include="lib\font-translation\FontDecoder.cpp" />
+    <ClCompile Include="lib\font-translation\StandardFontsDimensions.cpp" />
+    <ClCompile Include="lib\interpreter\PDFInterpreter.cpp" />
+    <ClCompile Include="lib\interpreter\PDFRecursiveInterpreter.cpp" />
+    <ClCompile Include="support\4DPlugin-JSON.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="4D Plugin API\4DPluginAPI.h">
+      <Filter>4D Plugin API</Filter>
+    </ClInclude>
+    <ClInclude Include="4D Plugin API\EntryPoints.h">
+      <Filter>4D Plugin API</Filter>
+    </ClInclude>
+    <ClInclude Include="4D Plugin API\Flags.h">
+      <Filter>4D Plugin API</Filter>
+    </ClInclude>
+    <ClInclude Include="4D Plugin API\PrivateTypes.h">
+      <Filter>4D Plugin API</Filter>
+    </ClInclude>
+    <ClInclude Include="4D Plugin API\PublicTypes.h">
+      <Filter>4D Plugin API</Filter>
+    </ClInclude>
+    <ClInclude Include="4DPlugin-PDF-Text-Extraction.h" />
+    <ClInclude Include="4D Plugin API\Classes\C_TEXT.h" />
+    <ClInclude Include="4D Plugin API\Classes\C_TYPES.h" />
+    <ClInclude Include="lib\pdf-writer-enhancers\Bytes.h" />
+    <ClInclude Include="lib\text-placements\TextPlacement.h" />
+    <ClInclude Include="lib\text-placements\TextPlacementsCollector.h" />
+    <ClInclude Include="lib\text-placements\TPCollectionState.h" />
+    <ClInclude Include="lib\text-placements\Transformations.h" />
+    <ClInclude Include="lib\bidi\BidiConversion.h" />
+    <ClInclude Include="lib\bidi\ICUInclude.h" />
+    <ClInclude Include="lib\font-translation\Encoding.h" />
+    <ClInclude Include="lib\font-translation\FontDecoder.h" />
+    <ClInclude Include="lib\font-translation\StandardFontsDimensions.h" />
+    <ClInclude Include="lib\font-translation\Translation.h" />
+    <ClInclude Include="lib\interpreter\IPDFInterpreterHandler.h" />
+    <ClInclude Include="lib\interpreter\IPDFRecursiveInterpreterHandler.h" />
+    <ClInclude Include="lib\interpreter\PDFInterpreter.h" />
+    <ClInclude Include="lib\interpreter\PDFRecursiveInterpreter.h" />
+    <ClInclude Include="support\4DPlugin-JSON.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="4D Plugin API">
+      <UniqueIdentifier>{51800f7b-66bf-4dcc-8e9f-7fed4ea6fbe9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="4D Plugin API\4DPluginAPI.def">
+      <Filter>4D Plugin API</Filter>
+    </None>
+  </ItemGroup>
+</Project>

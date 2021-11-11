@@ -1,0 +1,769 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18B684F706944F2000CC6A1E /* 4DPluginAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B684F006944F2000CC6A1E /* 4DPluginAPI.h */; };
+		18B684F806944F2000CC6A1E /* EntryPoints.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B684F106944F2000CC6A1E /* EntryPoints.h */; };
+		18B684F906944F2000CC6A1E /* Flags.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B684F206944F2000CC6A1E /* Flags.h */; };
+		18B684FA06944F2000CC6A1E /* PrivateTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B684F306944F2000CC6A1E /* PrivateTypes.h */; };
+		18B684FB06944F2000CC6A1E /* PublicTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B684F406944F2000CC6A1E /* PublicTypes.h */; };
+		18B684FF06944F8800CC6A1E /* 4DPlugin-PDF-Text-Extraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B684FE06944F8800CC6A1E /* 4DPlugin-PDF-Text-Extraction.cpp */; };
+		8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		D120937F13534DCC00A72CAA /* 4DPlugin-PDF-Text-Extraction.h in Headers */ = {isa = PBXBuildFile; fileRef = D120937E13534DCC00A72CAA /* 4DPlugin-PDF-Text-Extraction.h */; };
+		D130064F12F02D9700702C0E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D130064E12F02D9700702C0E /* Cocoa.framework */; };
+		D13116A91A03ACB700DE1322 /* 4DPluginAPI.c in Sources */ = {isa = PBXBuildFile; fileRef = D13116A81A03ACB700DE1322 /* 4DPluginAPI.c */; settings = {COMPILER_FLAGS = "-Wno-multichar"; }; };
+		D134D4AC1A030BA0008D14EF /* manifest.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = D134D4A91A030B06008D14EF /* manifest.json */; };
+		D1FD11CD273C89BC00E340AD /* 4DPlugin-JSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD11CB273C89BC00E340AD /* 4DPlugin-JSON.cpp */; };
+		D1FD11CE273C89BC00E340AD /* 4DPlugin-JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11CC273C89BC00E340AD /* 4DPlugin-JSON.h */; };
+		D1FD11D4273C8CE500E340AD /* ErrorsAndWarnings.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11D2273C8CE500E340AD /* ErrorsAndWarnings.h */; };
+		D1FD11D5273C8CE500E340AD /* TextExtraction.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11D3273C8CE500E340AD /* TextExtraction.h */; };
+		D1FD11D8273C8DA500E340AD /* TextExtraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD11D7273C8DA500E340AD /* TextExtraction.cpp */; };
+		D1FD11E2273C8EE900E340AD /* libZlib_OBJLIB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD11DB273C8EE900E340AD /* libZlib_OBJLIB.a */; };
+		D1FD11E3273C8EE900E340AD /* libLibJpeg_OBJLIB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD11DC273C8EE900E340AD /* libLibJpeg_OBJLIB.a */; };
+		D1FD11E4273C8EE900E340AD /* libLibTiff_OBJLIB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD11DD273C8EE900E340AD /* libLibTiff_OBJLIB.a */; };
+		D1FD11E5273C8EE900E340AD /* libFreeType_OBJLIB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD11DE273C8EE900E340AD /* libFreeType_OBJLIB.a */; };
+		D1FD11E6273C8EE900E340AD /* libPDFWriter_OBJLIB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD11DF273C8EE900E340AD /* libPDFWriter_OBJLIB.a */; };
+		D1FD11E8273C8EE900E340AD /* libLibAesgm_OBJLIB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD11E1273C8EE900E340AD /* libLibAesgm_OBJLIB.a */; };
+		D1FD11ED273C8FE700E340AD /* BidiConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11EA273C8FE700E340AD /* BidiConversion.h */; };
+		D1FD11EE273C8FE700E340AD /* BidiConversion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD11EB273C8FE700E340AD /* BidiConversion.cpp */; };
+		D1FD11EF273C8FE700E340AD /* ICUInclude.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11EC273C8FE700E340AD /* ICUInclude.h */; };
+		D1FD11F8273C8FF000E340AD /* Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11F1273C8FF000E340AD /* Encoding.h */; };
+		D1FD11F9273C8FF000E340AD /* Translation.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11F2273C8FF000E340AD /* Translation.h */; };
+		D1FD11FA273C8FF000E340AD /* StandardFontsDimensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11F3273C8FF000E340AD /* StandardFontsDimensions.h */; };
+		D1FD11FB273C8FF000E340AD /* FontDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD11F4273C8FF000E340AD /* FontDecoder.h */; };
+		D1FD11FC273C8FF000E340AD /* Encoding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD11F5273C8FF000E340AD /* Encoding.cpp */; };
+		D1FD11FD273C8FF000E340AD /* FontDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD11F6273C8FF000E340AD /* FontDecoder.cpp */; };
+		D1FD11FE273C8FF000E340AD /* StandardFontsDimensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD11F7273C8FF000E340AD /* StandardFontsDimensions.cpp */; };
+		D1FD1206273C8FF800E340AD /* IPDFRecursiveInterpreterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1200273C8FF800E340AD /* IPDFRecursiveInterpreterHandler.h */; };
+		D1FD1207273C8FF800E340AD /* IPDFInterpreterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1201273C8FF800E340AD /* IPDFInterpreterHandler.h */; };
+		D1FD1208273C8FF800E340AD /* PDFInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD1202273C8FF800E340AD /* PDFInterpreter.cpp */; };
+		D1FD1209273C8FF800E340AD /* PDFInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1203273C8FF800E340AD /* PDFInterpreter.h */; };
+		D1FD120A273C8FF800E340AD /* PDFRecursiveInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1204273C8FF800E340AD /* PDFRecursiveInterpreter.h */; };
+		D1FD120B273C8FF800E340AD /* PDFRecursiveInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD1205273C8FF800E340AD /* PDFRecursiveInterpreter.cpp */; };
+		D1FD120F273C900500E340AD /* Bytes.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD120D273C900500E340AD /* Bytes.h */; };
+		D1FD1210273C900500E340AD /* Bytes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD120E273C900500E340AD /* Bytes.cpp */; };
+		D1FD1219273C900F00E340AD /* TPCollectionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD1212273C900F00E340AD /* TPCollectionState.cpp */; };
+		D1FD121A273C900F00E340AD /* TextPlacementsCollector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD1213273C900F00E340AD /* TextPlacementsCollector.cpp */; };
+		D1FD121B273C900F00E340AD /* TextPlacement.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1214273C900F00E340AD /* TextPlacement.h */; };
+		D1FD121C273C900F00E340AD /* Transformations.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1215273C900F00E340AD /* Transformations.h */; };
+		D1FD121D273C900F00E340AD /* Transformations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD1216273C900F00E340AD /* Transformations.cpp */; };
+		D1FD121E273C900F00E340AD /* TextPlacementsCollector.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1217273C900F00E340AD /* TextPlacementsCollector.h */; };
+		D1FD121F273C900F00E340AD /* TPCollectionState.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1218273C900F00E340AD /* TPCollectionState.h */; };
+		D1FD1224273C90C900E340AD /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD1223273C90C900E340AD /* libpng16.a */; };
+		D1FD1229273C995B00E340AD /* C_TEXT.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1226273C995B00E340AD /* C_TEXT.h */; };
+		D1FD122A273C995B00E340AD /* C_TEXT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD1227273C995B00E340AD /* C_TEXT.cpp */; };
+		D1FD122B273C995B00E340AD /* C_TYPES.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD1228273C995B00E340AD /* C_TYPES.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D134D4AB1A030B7A008D14EF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				D134D4AC1A030BA0008D14EF /* manifest.json in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		189286350695AD8900B05D6E /* PDF Text Extraction.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PDF Text Extraction.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18B684F006944F2000CC6A1E /* 4DPluginAPI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = 4DPluginAPI.h; sourceTree = "<group>"; };
+		18B684F106944F2000CC6A1E /* EntryPoints.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = EntryPoints.h; sourceTree = "<group>"; };
+		18B684F206944F2000CC6A1E /* Flags.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Flags.h; sourceTree = "<group>"; };
+		18B684F306944F2000CC6A1E /* PrivateTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PrivateTypes.h; sourceTree = "<group>"; };
+		18B684F406944F2000CC6A1E /* PublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PublicTypes.h; sourceTree = "<group>"; };
+		18B684FE06944F8800CC6A1E /* 4DPlugin-PDF-Text-Extraction.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = "4DPlugin-PDF-Text-Extraction.cpp"; sourceTree = "<group>"; };
+		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D120937E13534DCC00A72CAA /* 4DPlugin-PDF-Text-Extraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "4DPlugin-PDF-Text-Extraction.h"; sourceTree = "<group>"; };
+		D130064E12F02D9700702C0E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		D13116A81A03ACB700DE1322 /* 4DPluginAPI.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = 4DPluginAPI.c; sourceTree = "<group>"; };
+		D134D4A91A030B06008D14EF /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		D14D10DD1A03A8A5008B3411 /* constants.xlf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = constants.xlf; sourceTree = "<group>"; };
+		D1FD11B8273C88BF00E340AD /* libPDFWriter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPDFWriter.a; path = a/libPDFWriter.a; sourceTree = "<group>"; };
+		D1FD11B9273C88BF00E340AD /* libLibAesgm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibAesgm.a; path = a/libLibAesgm.a; sourceTree = "<group>"; };
+		D1FD11BA273C88BF00E340AD /* libLibJpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibJpeg.a; path = a/libLibJpeg.a; sourceTree = "<group>"; };
+		D1FD11BB273C88BF00E340AD /* libFreeType.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFreeType.a; path = a/libFreeType.a; sourceTree = "<group>"; };
+		D1FD11BC273C88BF00E340AD /* libLibPng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibPng.a; path = a/libLibPng.a; sourceTree = "<group>"; };
+		D1FD11BD273C88BF00E340AD /* libjsoncpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsoncpp.a; path = a/libjsoncpp.a; sourceTree = "<group>"; };
+		D1FD11BE273C88BF00E340AD /* libZlib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZlib.a; path = a/libZlib.a; sourceTree = "<group>"; };
+		D1FD11BF273C88BF00E340AD /* libLibTiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTiff.a; path = a/libLibTiff.a; sourceTree = "<group>"; };
+		D1FD11CB273C89BC00E340AD /* 4DPlugin-JSON.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = "4DPlugin-JSON.cpp"; path = "support/4DPlugin-JSON.cpp"; sourceTree = "<group>"; };
+		D1FD11CC273C89BC00E340AD /* 4DPlugin-JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "4DPlugin-JSON.h"; path = "support/4DPlugin-JSON.h"; sourceTree = "<group>"; };
+		D1FD11D2273C8CE500E340AD /* ErrorsAndWarnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorsAndWarnings.h; path = include/ErrorsAndWarnings.h; sourceTree = "<group>"; };
+		D1FD11D3273C8CE500E340AD /* TextExtraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextExtraction.h; path = include/TextExtraction.h; sourceTree = "<group>"; };
+		D1FD11D7273C8DA500E340AD /* TextExtraction.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = TextExtraction.cpp; path = lib/TextExtraction.cpp; sourceTree = "<group>"; };
+		D1FD11DB273C8EE900E340AD /* libZlib_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZlib_OBJLIB.a; path = a/libZlib_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11DC273C8EE900E340AD /* libLibJpeg_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibJpeg_OBJLIB.a; path = a/libLibJpeg_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11DD273C8EE900E340AD /* libLibTiff_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTiff_OBJLIB.a; path = a/libLibTiff_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11DE273C8EE900E340AD /* libFreeType_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFreeType_OBJLIB.a; path = a/libFreeType_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11DF273C8EE900E340AD /* libPDFWriter_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPDFWriter_OBJLIB.a; path = a/libPDFWriter_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11E0273C8EE900E340AD /* libLibPng_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibPng_OBJLIB.a; path = a/libLibPng_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11E1273C8EE900E340AD /* libLibAesgm_OBJLIB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibAesgm_OBJLIB.a; path = a/libLibAesgm_OBJLIB.a; sourceTree = "<group>"; };
+		D1FD11EA273C8FE700E340AD /* BidiConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BidiConversion.h; path = lib/bidi/BidiConversion.h; sourceTree = "<group>"; };
+		D1FD11EB273C8FE700E340AD /* BidiConversion.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BidiConversion.cpp; path = lib/bidi/BidiConversion.cpp; sourceTree = "<group>"; };
+		D1FD11EC273C8FE700E340AD /* ICUInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUInclude.h; path = lib/bidi/ICUInclude.h; sourceTree = "<group>"; };
+		D1FD11F1273C8FF000E340AD /* Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encoding.h; path = "lib/font-translation/Encoding.h"; sourceTree = "<group>"; };
+		D1FD11F2273C8FF000E340AD /* Translation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Translation.h; path = "lib/font-translation/Translation.h"; sourceTree = "<group>"; };
+		D1FD11F3273C8FF000E340AD /* StandardFontsDimensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StandardFontsDimensions.h; path = "lib/font-translation/StandardFontsDimensions.h"; sourceTree = "<group>"; };
+		D1FD11F4273C8FF000E340AD /* FontDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontDecoder.h; path = "lib/font-translation/FontDecoder.h"; sourceTree = "<group>"; };
+		D1FD11F5273C8FF000E340AD /* Encoding.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Encoding.cpp; path = "lib/font-translation/Encoding.cpp"; sourceTree = "<group>"; };
+		D1FD11F6273C8FF000E340AD /* FontDecoder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = FontDecoder.cpp; path = "lib/font-translation/FontDecoder.cpp"; sourceTree = "<group>"; };
+		D1FD11F7273C8FF000E340AD /* StandardFontsDimensions.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = StandardFontsDimensions.cpp; path = "lib/font-translation/StandardFontsDimensions.cpp"; sourceTree = "<group>"; };
+		D1FD1200273C8FF800E340AD /* IPDFRecursiveInterpreterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPDFRecursiveInterpreterHandler.h; path = lib/interpreter/IPDFRecursiveInterpreterHandler.h; sourceTree = "<group>"; };
+		D1FD1201273C8FF800E340AD /* IPDFInterpreterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPDFInterpreterHandler.h; path = lib/interpreter/IPDFInterpreterHandler.h; sourceTree = "<group>"; };
+		D1FD1202273C8FF800E340AD /* PDFInterpreter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = PDFInterpreter.cpp; path = lib/interpreter/PDFInterpreter.cpp; sourceTree = "<group>"; };
+		D1FD1203273C8FF800E340AD /* PDFInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDFInterpreter.h; path = lib/interpreter/PDFInterpreter.h; sourceTree = "<group>"; };
+		D1FD1204273C8FF800E340AD /* PDFRecursiveInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDFRecursiveInterpreter.h; path = lib/interpreter/PDFRecursiveInterpreter.h; sourceTree = "<group>"; };
+		D1FD1205273C8FF800E340AD /* PDFRecursiveInterpreter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = PDFRecursiveInterpreter.cpp; path = lib/interpreter/PDFRecursiveInterpreter.cpp; sourceTree = "<group>"; };
+		D1FD120D273C900500E340AD /* Bytes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bytes.h; path = "lib/pdf-writer-enhancers/Bytes.h"; sourceTree = "<group>"; };
+		D1FD120E273C900500E340AD /* Bytes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Bytes.cpp; path = "lib/pdf-writer-enhancers/Bytes.cpp"; sourceTree = "<group>"; };
+		D1FD1212273C900F00E340AD /* TPCollectionState.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = TPCollectionState.cpp; path = "lib/text-placements/TPCollectionState.cpp"; sourceTree = "<group>"; };
+		D1FD1213273C900F00E340AD /* TextPlacementsCollector.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = TextPlacementsCollector.cpp; path = "lib/text-placements/TextPlacementsCollector.cpp"; sourceTree = "<group>"; };
+		D1FD1214273C900F00E340AD /* TextPlacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextPlacement.h; path = "lib/text-placements/TextPlacement.h"; sourceTree = "<group>"; };
+		D1FD1215273C900F00E340AD /* Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transformations.h; path = "lib/text-placements/Transformations.h"; sourceTree = "<group>"; };
+		D1FD1216273C900F00E340AD /* Transformations.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Transformations.cpp; path = "lib/text-placements/Transformations.cpp"; sourceTree = "<group>"; };
+		D1FD1217273C900F00E340AD /* TextPlacementsCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextPlacementsCollector.h; path = "lib/text-placements/TextPlacementsCollector.h"; sourceTree = "<group>"; };
+		D1FD1218273C900F00E340AD /* TPCollectionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCollectionState.h; path = "lib/text-placements/TPCollectionState.h"; sourceTree = "<group>"; };
+		D1FD1223273C90C900E340AD /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = a/libpng16.a; sourceTree = "<group>"; };
+		D1FD1226273C995B00E340AD /* C_TEXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C_TEXT.h; path = "4D Plugin API/Classes/C_TEXT.h"; sourceTree = "<group>"; };
+		D1FD1227273C995B00E340AD /* C_TEXT.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = C_TEXT.cpp; path = "4D Plugin API/Classes/C_TEXT.cpp"; sourceTree = "<group>"; };
+		D1FD1228273C995B00E340AD /* C_TYPES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C_TYPES.h; path = "4D Plugin API/Classes/C_TYPES.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D01CCCD0486CAD60068D4B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1FD1224273C90C900E340AD /* libpng16.a in Frameworks */,
+				D1FD11E2273C8EE900E340AD /* libZlib_OBJLIB.a in Frameworks */,
+				D1FD11E3273C8EE900E340AD /* libLibJpeg_OBJLIB.a in Frameworks */,
+				D1FD11E4273C8EE900E340AD /* libLibTiff_OBJLIB.a in Frameworks */,
+				D1FD11E5273C8EE900E340AD /* libFreeType_OBJLIB.a in Frameworks */,
+				D1FD11E6273C8EE900E340AD /* libPDFWriter_OBJLIB.a in Frameworks */,
+				D1FD11E8273C8EE900E340AD /* libLibAesgm_OBJLIB.a in Frameworks */,
+				D130064F12F02D9700702C0E /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* PDF Text Extraction */ = {
+			isa = PBXGroup;
+			children = (
+				D1FD1227273C995B00E340AD /* C_TEXT.cpp */,
+				D1FD1226273C995B00E340AD /* C_TEXT.h */,
+				D1FD1228273C995B00E340AD /* C_TYPES.h */,
+				D108BD7A1A03D1E6001F1B90 /* Manifest */,
+				08FB77ADFE841716C02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				189286360695AD8900B05D6E /* Products */,
+				D16FBB3C22A4C07E008F0416 /* Frameworks */,
+			);
+			name = "PDF Text Extraction";
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				D130064E12F02D9700702C0E /* Cocoa.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD10486CAD60068D4B7 /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77ADFE841716C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				18B684FE06944F8800CC6A1E /* 4DPlugin-PDF-Text-Extraction.cpp */,
+				D120937E13534DCC00A72CAA /* 4DPlugin-PDF-Text-Extraction.h */,
+				D1FD11CB273C89BC00E340AD /* 4DPlugin-JSON.cpp */,
+				D1FD11CC273C89BC00E340AD /* 4DPlugin-JSON.h */,
+				D1FD11D2273C8CE500E340AD /* ErrorsAndWarnings.h */,
+				D1FD11D7273C8DA500E340AD /* TextExtraction.cpp */,
+				D1FD11D3273C8CE500E340AD /* TextExtraction.h */,
+				D1FD11EB273C8FE700E340AD /* BidiConversion.cpp */,
+				D1FD11EA273C8FE700E340AD /* BidiConversion.h */,
+				D1FD11EC273C8FE700E340AD /* ICUInclude.h */,
+				D1FD11F5273C8FF000E340AD /* Encoding.cpp */,
+				D1FD11F1273C8FF000E340AD /* Encoding.h */,
+				D1FD11F6273C8FF000E340AD /* FontDecoder.cpp */,
+				D1FD11F4273C8FF000E340AD /* FontDecoder.h */,
+				D1FD11F7273C8FF000E340AD /* StandardFontsDimensions.cpp */,
+				D1FD11F3273C8FF000E340AD /* StandardFontsDimensions.h */,
+				D1FD11F2273C8FF000E340AD /* Translation.h */,
+				D1FD1201273C8FF800E340AD /* IPDFInterpreterHandler.h */,
+				D1FD1200273C8FF800E340AD /* IPDFRecursiveInterpreterHandler.h */,
+				D1FD1202273C8FF800E340AD /* PDFInterpreter.cpp */,
+				D1FD1203273C8FF800E340AD /* PDFInterpreter.h */,
+				D1FD1205273C8FF800E340AD /* PDFRecursiveInterpreter.cpp */,
+				D1FD1204273C8FF800E340AD /* PDFRecursiveInterpreter.h */,
+				D1FD120E273C900500E340AD /* Bytes.cpp */,
+				D1FD120D273C900500E340AD /* Bytes.h */,
+				D1FD1214273C900F00E340AD /* TextPlacement.h */,
+				D1FD1213273C900F00E340AD /* TextPlacementsCollector.cpp */,
+				D1FD1217273C900F00E340AD /* TextPlacementsCollector.h */,
+				D1FD1212273C900F00E340AD /* TPCollectionState.cpp */,
+				D1FD1218273C900F00E340AD /* TPCollectionState.h */,
+				D1FD1216273C900F00E340AD /* Transformations.cpp */,
+				D1FD1215273C900F00E340AD /* Transformations.h */,
+				18B684ED06944F2000CC6A1E /* 4D Plugin API */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		189286360695AD8900B05D6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				189286350695AD8900B05D6E /* PDF Text Extraction.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18B684ED06944F2000CC6A1E /* 4D Plugin API */ = {
+			isa = PBXGroup;
+			children = (
+				D13116A81A03ACB700DE1322 /* 4DPluginAPI.c */,
+				18B684F006944F2000CC6A1E /* 4DPluginAPI.h */,
+				18B684F106944F2000CC6A1E /* EntryPoints.h */,
+				18B684F206944F2000CC6A1E /* Flags.h */,
+				18B684F306944F2000CC6A1E /* PrivateTypes.h */,
+				18B684F406944F2000CC6A1E /* PublicTypes.h */,
+			);
+			path = "4D Plugin API";
+			sourceTree = "<group>";
+		};
+		D108BD7A1A03D1E6001F1B90 /* Manifest */ = {
+			isa = PBXGroup;
+			children = (
+				D134D4A91A030B06008D14EF /* manifest.json */,
+				D14D10DD1A03A8A5008B3411 /* constants.xlf */,
+			);
+			name = Manifest;
+			sourceTree = "<group>";
+		};
+		D16FBB3C22A4C07E008F0416 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1FD1223273C90C900E340AD /* libpng16.a */,
+				D1FD11DE273C8EE900E340AD /* libFreeType_OBJLIB.a */,
+				D1FD11E1273C8EE900E340AD /* libLibAesgm_OBJLIB.a */,
+				D1FD11DC273C8EE900E340AD /* libLibJpeg_OBJLIB.a */,
+				D1FD11E0273C8EE900E340AD /* libLibPng_OBJLIB.a */,
+				D1FD11DD273C8EE900E340AD /* libLibTiff_OBJLIB.a */,
+				D1FD11DF273C8EE900E340AD /* libPDFWriter_OBJLIB.a */,
+				D1FD11DB273C8EE900E340AD /* libZlib_OBJLIB.a */,
+				D1FD11BB273C88BF00E340AD /* libFreeType.a */,
+				D1FD11BD273C88BF00E340AD /* libjsoncpp.a */,
+				D1FD11B9273C88BF00E340AD /* libLibAesgm.a */,
+				D1FD11BA273C88BF00E340AD /* libLibJpeg.a */,
+				D1FD11BC273C88BF00E340AD /* libLibPng.a */,
+				D1FD11BF273C88BF00E340AD /* libLibTiff.a */,
+				D1FD11B8273C88BF00E340AD /* libPDFWriter.a */,
+				D1FD11BE273C88BF00E340AD /* libZlib.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8D01CCC70486CAD60068D4B7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1FD11EF273C8FE700E340AD /* ICUInclude.h in Headers */,
+				18B684F706944F2000CC6A1E /* 4DPluginAPI.h in Headers */,
+				18B684F806944F2000CC6A1E /* EntryPoints.h in Headers */,
+				D1FD11ED273C8FE700E340AD /* BidiConversion.h in Headers */,
+				D1FD120F273C900500E340AD /* Bytes.h in Headers */,
+				D1FD11D4273C8CE500E340AD /* ErrorsAndWarnings.h in Headers */,
+				D1FD11FA273C8FF000E340AD /* StandardFontsDimensions.h in Headers */,
+				D1FD121B273C900F00E340AD /* TextPlacement.h in Headers */,
+				D1FD120A273C8FF800E340AD /* PDFRecursiveInterpreter.h in Headers */,
+				D1FD1209273C8FF800E340AD /* PDFInterpreter.h in Headers */,
+				D1FD11D5273C8CE500E340AD /* TextExtraction.h in Headers */,
+				D1FD11FB273C8FF000E340AD /* FontDecoder.h in Headers */,
+				D1FD122B273C995B00E340AD /* C_TYPES.h in Headers */,
+				18B684F906944F2000CC6A1E /* Flags.h in Headers */,
+				D1FD11F8273C8FF000E340AD /* Encoding.h in Headers */,
+				18B684FA06944F2000CC6A1E /* PrivateTypes.h in Headers */,
+				D1FD1207273C8FF800E340AD /* IPDFInterpreterHandler.h in Headers */,
+				18B684FB06944F2000CC6A1E /* PublicTypes.h in Headers */,
+				D1FD1206273C8FF800E340AD /* IPDFRecursiveInterpreterHandler.h in Headers */,
+				D1FD121F273C900F00E340AD /* TPCollectionState.h in Headers */,
+				D1FD121E273C900F00E340AD /* TextPlacementsCollector.h in Headers */,
+				D1FD11F9273C8FF000E340AD /* Translation.h in Headers */,
+				D1FD1229273C995B00E340AD /* C_TEXT.h in Headers */,
+				D120937F13534DCC00A72CAA /* 4DPlugin-PDF-Text-Extraction.h in Headers */,
+				D1FD11CE273C89BC00E340AD /* 4DPlugin-JSON.h in Headers */,
+				D1FD121C273C900F00E340AD /* Transformations.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8D01CCC60486CAD60068D4B7 /* PDF Text Extraction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42D60B3F0A9DDBC8002ABB42 /* Build configuration list for PBXNativeTarget "PDF Text Extraction" */;
+			buildPhases = (
+				8D01CCC70486CAD60068D4B7 /* Headers */,
+				8D01CCC90486CAD60068D4B7 /* Resources */,
+				D134D4AB1A030B7A008D14EF /* CopyFiles */,
+				8D01CCCB0486CAD60068D4B7 /* Sources */,
+				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
+				8D01CCCF0486CAD60068D4B7 /* Rez */,
+				D1292E7B22C4A91E00CB5A8C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PDF Text Extraction";
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = "PDF Text Extraction";
+			productReference = 189286350695AD8900B05D6E /* PDF Text Extraction.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				TargetAttributes = {
+					8D01CCC60486CAD60068D4B7 = {
+						DevelopmentTeam = Y69CWUC25B;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 42D60B430A9DDBC8002ABB42 /* Build configuration list for PBXProject "PDF Text Extraction" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* PDF Text Extraction */;
+			productRefGroup = 189286360695AD8900B05D6E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D01CCC60486CAD60068D4B7 /* PDF Text Extraction */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D01CCC90486CAD60068D4B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		8D01CCCF0486CAD60068D4B7 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D1292E7B22C4A91E00CB5A8C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test \"$CONFIGURATION\" == 'Deployment'; then\n\n    USER_NAME=keisuke.miyako@4d.com\n    UUID=`uuidgen | tr -d - | tr -d '\\n' | tr '[:upper:]' '[:lower:]'`\n    DEVELOPER_ID=`security find-identity -p codesigning -v | egrep 'Developer ID Application[^\"]+' -o`\n    PRODUCT_PATH=\"$CODESIGNING_FOLDER_PATH\"\n    \n    #clean\n    xattr -cr \"$PRODUCT_PATH\"\n    codesign --remove-signature \"$PRODUCT_PATH\"\n    \n    #sign\n    codesign --verbose --deep --timestamp --force --sign \"$DEVELOPER_ID\" \"$PRODUCT_PATH\"\n    \n    #archive\n    DMG_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.dmg\"\n    ZIP_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.zip\" #for windows\n    rm -f \"$DMG_PATH\"\n    hdiutil create -format UDBZ -plist -srcfolder \"$PRODUCT_PATH\" \"$DMG_PATH\"\n    rm -f \"$ZIP_PATH\"\n    ditto -c -k --keepParent \"$PRODUCT_PATH\" \"$ZIP_PATH\"\n    \n    # must staple the same dmg that was submitted for notarisation\n    # to staple the bundle inside the dmg too,\n    # one must:\n    # sign the bundle\n    # archive the bundle and notarise the dmg\n    # staple the bundle\n    # archive the bundle and notarise the dmg again\n    # staple the dmg\n    # here, we just staple the dmg. it should be sufficient    \n    \n    #round 2\n    echo \"# staple only the dmg\"\n    echo \"\\r\"\n    echo \"xcrun stapler staple \\\"$DMG_PATH\\\"\"\n    echo \"\\r\"\n    \n    #round 3 (optional)\n    echo \"# staple the bundle and the dmg\"\n    echo \"\\r\"\n    echo \"xcrun stapler staple \\\"$PRODUCT_PATH\\\"\"\n    echo \"rm -f \\\"$DMG_PATH\\\"\"\n    echo \"hdiutil create -format UDBZ -plist -srcfolder  \\\"$PRODUCT_PATH\\\" \\\"$DMG_PATH\\\" \"\n    echo \"xcrun altool --notarize-app --file \\\"$DMG_PATH\\\" --username \\\"$USER_NAME\\\" --password \\\"@keychain:altool\\\" --primary-bundle-id $PRODUCT_BUNDLE_IDENTIFIER.$UUID\"\n    echo \"\\r\"\n    \n    #round 1\n    xcrun altool --notarize-app --file \"$DMG_PATH\" --username \"$USER_NAME\" --password \"@keychain:altool\" --primary-bundle-id $PRODUCT_BUNDLE_IDENTIFIER.$UUID\n    \n    #for round 3    \n    UUID=`uuidgen | tr -d - | tr -d '\\n' | tr '[:upper:]' '[:lower:]'`\nelse\n    echo \"No notarization performed as this is not a release build.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1FD120B273C8FF800E340AD /* PDFRecursiveInterpreter.cpp in Sources */,
+				D1FD122A273C995B00E340AD /* C_TEXT.cpp in Sources */,
+				D1FD11FE273C8FF000E340AD /* StandardFontsDimensions.cpp in Sources */,
+				D1FD121D273C900F00E340AD /* Transformations.cpp in Sources */,
+				D1FD121A273C900F00E340AD /* TextPlacementsCollector.cpp in Sources */,
+				18B684FF06944F8800CC6A1E /* 4DPlugin-PDF-Text-Extraction.cpp in Sources */,
+				D1FD1219273C900F00E340AD /* TPCollectionState.cpp in Sources */,
+				D1FD11EE273C8FE700E340AD /* BidiConversion.cpp in Sources */,
+				D1FD1208273C8FF800E340AD /* PDFInterpreter.cpp in Sources */,
+				D1FD11FD273C8FF000E340AD /* FontDecoder.cpp in Sources */,
+				D1FD11D8273C8DA500E340AD /* TextExtraction.cpp in Sources */,
+				D1FD1210273C900500E340AD /* Bytes.cpp in Sources */,
+				D1FD11CD273C89BC00E340AD /* 4DPlugin-JSON.cpp in Sources */,
+				D1FD11FC273C8FF000E340AD /* Encoding.cpp in Sources */,
+				D13116A91A03ACB700DE1322 /* 4DPluginAPI.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		42D60B400A9DDBC8002ABB42 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				DEPLOYMENT_LOCATION = NO;
+				DEVELOPMENT_TEAM = Y69CWUC25B;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "include/**";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/a",
+				);
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.4D.PDF-Text-Extraction";
+				PRODUCT_NAME = "PDF Text Extraction";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		42D60B410A9DDBC8002ABB42 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = NO;
+				DEVELOPMENT_TEAM = Y69CWUC25B;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "include/**";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/a",
+				);
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.4D.PDF-Text-Extraction";
+				PRODUCT_NAME = "PDF Text Extraction";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		42D60B420A9DDBC8002ABB42 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = NO;
+				DEVELOPMENT_TEAM = Y69CWUC25B;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "include/**";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/a",
+				);
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.4D.PDF-Text-Extraction";
+				PRODUCT_NAME = "PDF Text Extraction";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Default;
+		};
+		42D60B440A9DDBC8002ABB42 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				DEVELOPMENT_TEAM = Y69CWUC25B;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "include/**";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OBJROOT = "$(SRCROOT)/build";
+				SDKROOT = macosx;
+				SYMROOT = "$(SRCROOT)/test/Plugins";
+			};
+			name = Development;
+		};
+		42D60B450A9DDBC8002ABB42 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				DEVELOPMENT_TEAM = Y69CWUC25B;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "include/**";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OBJROOT = "$(SRCROOT)/build";
+				SDKROOT = macosx;
+				SYMROOT = "$(SRCROOT)/test/Plugins";
+			};
+			name = Deployment;
+		};
+		42D60B460A9DDBC8002ABB42 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				DEVELOPMENT_TEAM = Y69CWUC25B;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "include/**";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = macosx;
+				SYMROOT = "$(SRCROOT)/test/Plugins";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		42D60B3F0A9DDBC8002ABB42 /* Build configuration list for PBXNativeTarget "PDF Text Extraction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42D60B400A9DDBC8002ABB42 /* Development */,
+				42D60B410A9DDBC8002ABB42 /* Deployment */,
+				42D60B420A9DDBC8002ABB42 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		42D60B430A9DDBC8002ABB42 /* Build configuration list for PBXProject "PDF Text Extraction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42D60B440A9DDBC8002ABB42 /* Development */,
+				42D60B450A9DDBC8002ABB42 /* Deployment */,
+				42D60B460A9DDBC8002ABB42 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

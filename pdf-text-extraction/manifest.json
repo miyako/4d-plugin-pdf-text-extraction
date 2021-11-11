@@ -1,0 +1,11 @@
+{
+    "name": "PDF Text Extraction",
+    "id": 20000,
+    "commands": [
+        {
+            "theme": "PDF Text Extraction",
+            "syntax": "PDF Extract text(&T;&J):J",
+            "threadSafe": true
+        }
+    ]
+}
