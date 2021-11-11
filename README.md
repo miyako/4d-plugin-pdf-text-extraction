@@ -4,3 +4,8 @@ PDF text extraction based on [galkahana/pdf-text-extraction](https://github.com/
 ### Syntax
 
 [miyako.github.io](https://miyako.github.io/2021/11/12/4d-plugin-pdf-text-extraction.html)
+
+### Similar projects
+
+* https://github.com/miyako/4d-plugin-poppler
+* https://github.com/miyako/4d-plugin-xpdf
