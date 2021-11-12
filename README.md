@@ -18,3 +18,4 @@ PDF text extraction based on [galkahana/pdf-text-extraction](https://github.com/
 ### See also
 
 * https://github.com/miyako/4d-plugin-podofo
+* https://github.com/miyako/4d-plugin-gs
