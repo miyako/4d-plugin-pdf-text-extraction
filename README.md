@@ -14,3 +14,7 @@ PDF text extraction based on [galkahana/pdf-text-extraction](https://github.com/
 
 * https://github.com/miyako/4d-plugin-poppler
 * https://github.com/miyako/4d-plugin-xpdf
+
+### See also
+
+* https://github.com/miyako/4d-plugin-podofo
