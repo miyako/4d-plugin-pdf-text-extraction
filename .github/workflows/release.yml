@@ -59,6 +59,35 @@ jobs:
       - name: setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      # Static libs (Zlib, PDFWriter, FreeType, etc.) are vendored as assets
+      # on the repo's own "libraries" release rather than committed to git
+      # (too large). PDFWriter_OBJLIB.lib is not currently published there for
+      # Windows - if this step starts failing on that file specifically, it
+      # needs to be built and uploaded to that release first.
+      - name: download Windows static libraries
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
+          $libs = @(
+            "Zlib_OBJLIB.lib",
+            "PDFWriter_OBJLIB.lib",
+            "FreeType_OBJLIB.lib",
+            "LibAesgm_OBJLIB.lib",
+            "LibJpeg_OBJLIB.lib",
+            "LibPng_OBJLIB.lib",
+            "LibTiff_OBJLIB.lib"
+          )
+          foreach ($lib in $libs) {
+            $url = "https://github.com/miyako/4d-plugin-pdf-text-extraction/releases/download/libraries/$lib"
+            $out = "lib\windows64\$lib"
+            Write-Host "Downloading $url"
+            Invoke-WebRequest -Uri $url -OutFile $out
+            if (-not (Test-Path $out) -or (Get-Item $out).Length -eq 0) {
+              Write-Error "Missing or empty: $lib - not currently published on the 'libraries' release."
+              exit 1
+            }
+          }
+
       # GitHub-hosted windows-latest ships VS2022 (v143 toolset) but not the
       # legacy v140 toolset the project is pinned to, so we override it on
       # the command line rather than requiring an extra VS component install.
@@ -132,6 +161,28 @@ jobs:
             --team-id "$TEAM_ID" \
             --password "$APP_PASSWORD" \
             --keychain "$KEYCHAIN_PATH"
+
+      # Static libs (Zlib, PDFWriter, FreeType, etc.) are vendored as assets
+      # on the repo's own "libraries" release rather than committed to git
+      # (too large). All 7 needed here are currently published for macOS.
+      - name: download macOS static libraries
+        run: |
+          set -euo pipefail
+          mkdir -p a
+          libs=(
+            "libpng16.a"
+            "libZlib_OBJLIB.a"
+            "libLibJpeg_OBJLIB.a"
+            "libLibTiff_OBJLIB.a"
+            "libFreeType_OBJLIB.a"
+            "libPDFWriter_OBJLIB.a"
+            "libLibAesgm_OBJLIB.a"
+          )
+          for lib in "${libs[@]}"; do
+            url="https://github.com/miyako/4d-plugin-pdf-text-extraction/releases/download/libraries/$lib"
+            echo "Downloading $url"
+            curl -fL "$url" -o "a/$lib"
+          done
 
       - name: build macOS plugin (universal)
         run: |
