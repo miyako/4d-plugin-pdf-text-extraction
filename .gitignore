@@ -3,3 +3,4 @@ pdf-text-extraction/lib/windows64/*
 pdf-text-extraction/a/*
 test/userPreferences.*
 test/Project/DerivedData/*
+build/*
