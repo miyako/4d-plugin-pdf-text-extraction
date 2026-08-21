@@ -59,33 +59,39 @@ jobs:
       - name: setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      # Static libs (Zlib, PDFWriter, FreeType, etc.) are vendored as assets
-      # on the repo's own "libraries" release rather than committed to git
-      # (too large). PDFWriter_OBJLIB.lib is not currently published there for
-      # Windows - if this step starts failing on that file specifically, it
-      # needs to be built and uploaded to that release first.
-      - name: download Windows static libraries
+      # Builds Zlib/FreeType/LibAesgm/LibJpeg/LibTiff/LibPng/PDFWriter from
+      # source instead of depending on hand-uploaded prebuilt binaries.
+      # Pinned to tag 4.1 - confirmed byte-for-byte identical to the headers
+      # already vendored under include/PDFWriter in this repo.
+      #
+      # PDF-Writer's own CMake defines two targets per dependency: a
+      # "<Name>_OBJLIB" OBJECT library (compiles sources, produces no .lib -
+      # this is CMake OBJECT-library semantics on every generator, verified
+      # directly rather than assumed) and a plain "<Name>" STATIC library
+      # that wraps it into a real archive. Building "PDFWriter" alone
+      # cascades through and builds all 6 dependencies automatically via
+      # target_link_libraries. We then rename each real output to the
+      # "_OBJLIB" filename this project's own .vcxproj already expects,
+      # since that's just this plugin's own packaging convention, not
+      # anything PDF-Writer's build produces directly.
+      - name: build PDFWriter static libraries from source
         shell: pwsh
         run: |
+          git clone --branch 4.1 --depth 1 https://github.com/galkahana/PDF-Writer.git pdfwriter-src
+          cmake -G "Visual Studio 17 2022" -A x64 -S pdfwriter-src -B pdfwriter-build
+          cmake --build pdfwriter-build --target PDFWriter --config Release
+
           New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
-          $libs = @(
-            "Zlib_OBJLIB.lib",
-            "PDFWriter_OBJLIB.lib",
-            "FreeType_OBJLIB.lib",
-            "LibAesgm_OBJLIB.lib",
-            "LibJpeg_OBJLIB.lib",
-            "LibPng_OBJLIB.lib",
-            "LibTiff_OBJLIB.lib"
-          )
+          $libs = @("Zlib", "LibAesgm", "LibJpeg", "LibTiff", "FreeType", "LibPng", "PDFWriter")
           foreach ($lib in $libs) {
-            $url = "https://github.com/miyako/4d-plugin-pdf-text-extraction/releases/download/libraries/$lib"
-            $out = "lib\windows64\$lib"
-            Write-Host "Downloading $url"
-            Invoke-WebRequest -Uri $url -OutFile $out
-            if (-not (Test-Path $out) -or (Get-Item $out).Length -eq 0) {
-              Write-Error "Missing or empty: $lib - not currently published on the 'libraries' release."
+            $found = Get-ChildItem -Path pdfwriter-build -Recurse -Filter "$lib.lib" | Select-Object -First 1
+            if (-not $found) {
+              Write-Error "Build did not produce $lib.lib - see build output above."
               exit 1
             }
+            $out = "lib\windows64\${lib}_OBJLIB.lib"
+            Copy-Item $found.FullName $out -Force
+            Write-Host "Copied $($found.FullName) -> $out"
           }
 
       # GitHub-hosted windows-latest ships VS2022 (v143 toolset) but not the
@@ -162,27 +168,43 @@ jobs:
             --password "$APP_PASSWORD" \
             --keychain "$KEYCHAIN_PATH"
 
-      # Static libs (Zlib, PDFWriter, FreeType, etc.) are vendored as assets
-      # on the repo's own "libraries" release rather than committed to git
-      # (too large). All 7 needed here are currently published for macOS.
-      - name: download macOS static libraries
+      # Builds Zlib/FreeType/LibAesgm/LibJpeg/LibTiff/LibPng/PDFWriter from
+      # source, mirroring the Windows job - see its comment for the full
+      # explanation of the _OBJLIB naming and why building "PDFWriter" alone
+      # is enough to cascade-build everything else.
+      - name: build PDFWriter static libraries from source
+        run: |
+          set -euo pipefail
+          git clone --branch 4.1 --depth 1 https://github.com/galkahana/PDF-Writer.git pdfwriter-src
+          cmake -G Xcode -S pdfwriter-src -B pdfwriter-build \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ env.MACOS_DEPLOYMENT_TARGET }}"
+          cmake --build pdfwriter-build --target PDFWriter --config Release
+
+          mkdir -p a
+          libs=(Zlib LibAesgm LibJpeg LibTiff FreeType LibPng PDFWriter)
+          for lib in "${libs[@]}"; do
+            found=$(find pdfwriter-build -name "lib${lib}.a" -print -quit)
+            if [ -z "$found" ]; then
+              echo "Build did not produce lib${lib}.a - see build output above." >&2
+              exit 1
+            fi
+            cp "$found" "a/lib${lib}_OBJLIB.a"
+            echo "Copied $found -> a/lib${lib}_OBJLIB.a"
+          done
+
+      # libpng16.a is linked separately from PDF-Writer's own LibPng_OBJLIB
+      # in this plugin's .xcodeproj (confirmed in the Frameworks build phase)
+      # and its origin is still unresolved - PDF-Writer's own CMake doesn't
+      # produce a file by this name. Still fetching it from the "libraries"
+      # release until that's tracked down.
+      - name: download macOS libpng16.a
         run: |
           set -euo pipefail
           mkdir -p a
-          libs=(
-            "libpng16.a"
-            "libZlib_OBJLIB.a"
-            "libLibJpeg_OBJLIB.a"
-            "libLibTiff_OBJLIB.a"
-            "libFreeType_OBJLIB.a"
-            "libPDFWriter_OBJLIB.a"
-            "libLibAesgm_OBJLIB.a"
-          )
-          for lib in "${libs[@]}"; do
-            url="https://github.com/miyako/4d-plugin-pdf-text-extraction/releases/download/libraries/$lib"
-            echo "Downloading $url"
-            curl -fL "$url" -o "a/$lib"
-          done
+          url="https://github.com/miyako/4d-plugin-pdf-text-extraction/releases/download/libraries/libpng16.a"
+          echo "Downloading $url"
+          curl -fL "$url" -o "a/libpng16.a"
 
       - name: build macOS plugin (universal)
         run: |
