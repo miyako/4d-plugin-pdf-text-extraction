@@ -14,6 +14,9 @@
 
 #include "TextExtraction.h"
 
+#include <cmath>
+#include <climits>
+
 using namespace std;
 using namespace PDFHummus;
 
@@ -40,65 +43,102 @@ void PluginMain(PA_long32 selector, PA_PluginParameters params) {
 
 #pragma mark -
 
+// Safely convert a caller-supplied double (e.g. from ob_get_n, which reflects
+// whatever a 4D method passed in) to a long. Returns false - leaving out
+// untouched - if d is NaN, +/-Infinity, or outside long's representable
+// range, all of which are undefined behavior for a plain (long)d cast.
+static bool SafeDoubleToLong(double d, long &out) {
+    if(!std::isfinite(d)) return false;
+    if(d < (double)LONG_MIN || d > (double)LONG_MAX) return false;
+    out = (long)d;
+    return true;
+}
+
 void PDF_Extract_text(PA_PluginParameters params) {
 
-    long startPage = 0;
-    long endPage = -1;
-    int  bidiFlag = -1;
-    
-    PackagePtr pParams = (PackagePtr)params->fParameters;
-    
-    C_TEXT t;
-    t.fromParamAtIndex(pParams, 1);
-    CUTF8String path;
-    t.copyPath(&path);
-    
+    // Created before the try block so the catch handlers below can still
+    // populate and return it - PA_ReturnObject is always reached exactly
+    // once, regardless of what throws inside the try.
     PA_ObjectRef returnValue = PA_CreateObject();
-    PA_ObjectRef options = PA_GetObjectParameter(params, 2);
-    
-    if(options) {
-        long _startPage = ob_get_n(options, L"start");
-        if(_startPage > 0) {
-            startPage = _startPage;
-        }
-        long _endPage = ob_get_n(options, L"end");
-        if(_endPage >= _startPage) {
-            endPage = _endPage;
-        }
-        if(ob_is_defined(options, L"bidi")){
-            CUTF8String _bidi;
-            if(ob_get_s(options, L"bidi", &_bidi)){
-                if(_bidi == (const uint8_t *)"LTR")
-                    bidiFlag = 0;
-                else if(_bidi == (const uint8_t *)"RTL")
-                    bidiFlag = 1;
+
+    try
+    {
+        long startPage = 0;
+        long endPage = -1;
+        int  bidiFlag = -1;
+
+        PackagePtr pParams = (PackagePtr)params->fParameters;
+
+        C_TEXT t;
+        t.fromParamAtIndex(pParams, 1);
+        CUTF8String path;
+        t.copyPath(&path);
+
+        PA_ObjectRef options = PA_GetObjectParameter(params, 2);
+
+        if(options) {
+            long _startPage = 0;
+            if(SafeDoubleToLong(ob_get_n(options, L"start"), _startPage)) {
+                if(_startPage > 0) {
+                    startPage = _startPage;
+                }
+            }
+            long _endPage = 0;
+            if(SafeDoubleToLong(ob_get_n(options, L"end"), _endPage)) {
+                if(_endPage >= _startPage) {
+                    endPage = _endPage;
+                }
+            }
+            if(ob_is_defined(options, L"bidi")){
+                CUTF8String _bidi;
+                if(ob_get_s(options, L"bidi", &_bidi)){
+                    if(_bidi == (const uint8_t *)"LTR")
+                        bidiFlag = 0;
+                    else if(_bidi == (const uint8_t *)"RTL")
+                        bidiFlag = 1;
+                }
             }
         }
-    }
-    
-    
-    TextExtraction textExtraction;
-    EStatusCode status;
-    
-    string filePath = (const char *)path.c_str();
-    
-    status = textExtraction.ExtractText(filePath, startPage, endPage);
 
-    if(status != eSuccess) {
-        cerr << "Error: " << textExtraction.LatestError.description.c_str() << endl;
+
+        TextExtraction textExtraction;
+        EStatusCode status;
+
+        string filePath = (const char *)path.c_str();
+
+        status = textExtraction.ExtractText(filePath, startPage, endPage);
+
+        if(status != eSuccess) {
+            cerr << "Error: " << textExtraction.LatestError.description.c_str() << endl;
+        }
+        TextExtractionWarningList::iterator it = textExtraction.LatestWarnings.begin();
+        for(; it != textExtraction.LatestWarnings.end(); ++it) {
+            cerr << "Warning: " << it->description.c_str() << endl;
+        }
+
+        if(status == eSuccess) {
+            ob_set_s(returnValue, "text", textExtraction.GetResultsAsText(bidiFlag).c_str());
+        }else{
+            ob_set_n(returnValue, L"status", status);
+        }
+
+        ob_set_b(returnValue, L"success", status == eSuccess);
     }
-    TextExtractionWarningList::iterator it = textExtraction.LatestWarnings.begin();
-    for(; it != textExtraction.LatestWarnings.end(); ++it) {
-        cerr << "Warning: " << it->description.c_str() << endl;
+    catch(const std::exception &e)
+    {
+        // Guarantees 4D still gets a return value instead of hanging:
+        // without this, an exception here would propagate to PluginMain's
+        // catch(...) after PA_ReturnObject was never called.
+        ob_set_s(returnValue, "text", "");
+        ob_set_s(returnValue, "error", e.what());
+        ob_set_b(returnValue, L"success", false);
     }
-    
-    if(status == eSuccess) {
-        ob_set_s(returnValue, "text", textExtraction.GetResultsAsText(bidiFlag).c_str());
-    }else{
-        ob_set_n(returnValue, L"status", status);
+    catch(...)
+    {
+        ob_set_s(returnValue, "text", "");
+        ob_set_s(returnValue, "error", "unknown exception during PDF text extraction");
+        ob_set_b(returnValue, L"success", false);
     }
-    
-    ob_set_b(returnValue, L"success", status == eSuccess);
-    
+
     PA_ReturnObject(params, returnValue);
 }
