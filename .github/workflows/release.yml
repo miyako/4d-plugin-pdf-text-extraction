@@ -85,7 +85,13 @@ jobs:
           # Letting CMake auto-detect whatever VS is actually there and
           # pinning just the toolset mirrors how "build x64" below already
           # handles this same runner-version drift for MSBuild directly.
-          cmake -A x64 -T v143 -S pdfwriter-src -B pdfwriter-build
+          # -DCMAKE_POLICY_VERSION_MINIMUM=3.5: PDF-Writer's own CMakeLists.txt
+          # (and subdirectories) declare cmake_minimum_required(VERSION
+          # 2.8.12). Modern CMake (this runner's version, confirmed via the
+          # actual error text) hard-errors on that instead of just warning -
+          # this is CMake's own documented workaround for vendored projects
+          # we don't want to edit, not a project-specific hack.
+          cmake -A x64 -T v143 -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -S pdfwriter-src -B pdfwriter-build
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
@@ -185,7 +191,8 @@ jobs:
           git clone --branch 4.1 --depth 1 https://github.com/galkahana/PDF-Writer.git pdfwriter-src
           cmake -G Xcode -S pdfwriter-src -B pdfwriter-build \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ env.MACOS_DEPLOYMENT_TARGET }}"
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ env.MACOS_DEPLOYMENT_TARGET }}" \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           mkdir -p a
