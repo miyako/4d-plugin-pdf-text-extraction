@@ -91,7 +91,7 @@ void PDF_Extract_text(PA_PluginParameters params) {
             }
             if(ob_is_defined(options, L"bidi")){
                 CUTF8String _bidi;
-                if(ob_get_s(options, L"bidi", &_bidi)){
+                if(ob_get_a(options, L"bidi", &_bidi)){
                     if(_bidi == (const uint8_t *)"LTR")
                         bidiFlag = 0;
                     else if(_bidi == (const uint8_t *)"RTL")
