@@ -91,7 +91,13 @@ jobs:
           # actual error text) hard-errors on that instead of just warning -
           # this is CMake's own documented workaround for vendored projects
           # we don't want to edit, not a project-specific hack.
-          cmake -A x64 -T v143 -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -S pdfwriter-src -B pdfwriter-build
+          # Quoted as one string: PowerShell's native-argument tokenizing
+          # splits an unquoted -DFOO=3.5 at the decimal point into two
+          # separate tokens (confirmed directly in CI: CMake reported the
+          # value as "3" and separately warned about an ignored extra path
+          # ".5"). Bash (the macOS job) doesn't have this problem, so only
+          # this line needs the extra quoting.
+          cmake -A x64 -T v143 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" -S pdfwriter-src -B pdfwriter-build
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
