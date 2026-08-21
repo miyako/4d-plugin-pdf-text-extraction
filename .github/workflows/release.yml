@@ -85,29 +85,42 @@ jobs:
           # Letting CMake auto-detect whatever VS is actually there and
           # pinning just the toolset mirrors how "build x64" below already
           # handles this same runner-version drift for MSBuild directly.
-          # -DCMAKE_POLICY_VERSION_MINIMUM=3.5: PDF-Writer's own CMakeLists.txt
-          # (and subdirectories) declare cmake_minimum_required(VERSION
-          # 2.8.12). Modern CMake (this runner's version, confirmed via the
-          # actual error text) hard-errors on that instead of just warning -
-          # this is CMake's own documented workaround for vendored projects
-          # we don't want to edit, not a project-specific hack.
-          # Quoted as one string: PowerShell's native-argument tokenizing
-          # splits an unquoted -DFOO=3.5 at the decimal point into two
-          # separate tokens (confirmed directly in CI: CMake reported the
-          # value as "3" and separately warned about an ignored extra path
-          # ".5"). Bash (the macOS job) doesn't have this problem, so only
-          # this line needs the extra quoting.
-          # -DCMAKE_POLICY_DEFAULT_CMP0091=NEW plus -DCMAKE_MSVC_RUNTIME_LIBRARY:
+          # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 (via preload.cmake below):
+          # PDF-Writer's own CMakeLists.txt (and subdirectories) declare
+          # cmake_minimum_required(VERSION 2.8.12). Modern CMake (this
+          # runner's version, confirmed via the actual error text) hard-
+          # errors on that instead of just warning - this is CMake's own
+          # documented workaround for vendored projects we don't want to
+          # edit, not a project-specific hack.
+          #
+          # CMAKE_POLICY_DEFAULT_CMP0091=NEW plus CMAKE_MSVC_RUNTIME_LIBRARY:
           # the plugin's own .vcxproj compiles with /MT (static CRT - visible
           # in its CL.exe invocation), but plain CMake defaults to /MD
           # (dynamic CRT) for MSVC, confirmed by the actual link errors this
           # produced (LNK2038 RuntimeLibrary mismatch, plus LNK2001 on
           # __imp_-prefixed symbols - the dynamic-CRT import-library stubs
           # that don't exist when linking against the static CRT). CMP0091
-          # has to be forced to NEW on the command line because PDF-Writer's
-          # own declared cmake_minimum_required predates it, so it wouldn't
-          # otherwise take effect even with CMAKE_MSVC_RUNTIME_LIBRARY set.
-          cmake -A x64 -T v143 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" -DCMAKE_POLICY_DEFAULT_CMP0091=NEW "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>" -S pdfwriter-src -B pdfwriter-build
+          # has to be forced to NEW because PDF-Writer's own declared
+          # cmake_minimum_required predates it, so it wouldn't otherwise
+          # take effect even with CMAKE_MSVC_RUNTIME_LIBRARY set.
+          #
+          # All three are written into a CMake script file and loaded with
+          # -C, rather than passed as -D command-line flags: a first attempt
+          # using quoted -D flags produced a link error byte-for-byte
+          # identical to before either fix was applied - strong evidence
+          # PowerShell's argument parsing was mangling them (it already
+          # demonstrably split an unquoted 3.5 at the decimal point earlier
+          # in this same job). A single-quoted here-string is never subject
+          # to PowerShell variable interpolation, so $<...> generator
+          # expressions and decimal values reach CMake exactly as written,
+          # regardless of command-line tokenizing quirks.
+          @'
+          set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "" FORCE)
+          set(CMAKE_POLICY_DEFAULT_CMP0091 NEW CACHE STRING "" FORCE)
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "" FORCE)
+          '@ | Set-Content -Path preload.cmake -Encoding utf8
+
+          cmake -A x64 -T v143 -C preload.cmake -S pdfwriter-src -B pdfwriter-build
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
