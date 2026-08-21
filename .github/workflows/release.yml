@@ -78,7 +78,14 @@ jobs:
         shell: pwsh
         run: |
           git clone --branch 4.1 --depth 1 https://github.com/galkahana/PDF-Writer.git pdfwriter-src
-          cmake -G "Visual Studio 17 2022" -A x64 -S pdfwriter-src -B pdfwriter-build
+          # No -G here: hardcoding "Visual Studio 17 2022" fails outright if
+          # the runner ships a newer VS generation (confirmed: this runner's
+          # actual compiler path is ...\Microsoft Visual Studio\18\..., not
+          # \17\, so that generator name matches no installed instance).
+          # Letting CMake auto-detect whatever VS is actually there and
+          # pinning just the toolset mirrors how "build x64" below already
+          # handles this same runner-version drift for MSBuild directly.
+          cmake -A x64 -T v143 -S pdfwriter-src -B pdfwriter-build
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
