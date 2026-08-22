@@ -221,44 +221,51 @@ jobs:
       # explanation of the _OBJLIB naming and why building "PDFWriter" alone
       # is enough to cascade-build everything else.
       #
-      # fdopen=fdopen (via preload.cmake, add_compile_definitions): two
-      # separate vendored copies of zlib's old zutil.h (ZLib's own, and the
-      # copy FreeType bundles under src/gzip for reading compressed PCF
-      # fonts) contain a decades-old compatibility block - "#if
-      # defined(MACOS) || defined(TARGET_OS_MAC) ... #define fdopen(fd,mode)
-      # NULL /* No fdopen() */" - written for classic Mac OS toolchains with
-      # no real fdopen(). TARGET_OS_MAC is unconditionally true on every
-      # modern Apple platform, so this still fires today, and confirmed
-      # directly in CI: the new macOS 26.5 SDK's own <stdio.h> declares
-      # fdopen() in a way that collides with our 2-arg function-like macro,
-      # producing "error: expected identifier or '('".
+      # Patching out the obsolete fdopen() redefinition: two separate
+      # vendored copies of zlib's old zutil.h (ZLib's own, and the copy
+      # FreeType bundles under src/gzip for reading compressed PCF fonts)
+      # contain a decades-old compatibility block - "#if defined(MACOS) ||
+      # defined(TARGET_OS_MAC) ... #define fdopen(fd,mode) NULL /* No
+      # fdopen() */" - written for classic Mac OS toolchains with no real
+      # fdopen(). TARGET_OS_MAC is unconditionally true on every modern
+      # Apple platform, so this still fires today, and confirmed directly
+      # in CI: the new macOS 26.5 SDK's own <stdio.h> declares fdopen() in
+      # a way that collides with our 2-arg function-like macro, producing
+      # "error: expected identifier or '('".
       #
-      # A first attempt injected -Dfdopen=fdopen via -DCMAKE_C_FLAGS /
-      # -DCMAKE_CXX_FLAGS directly, which broke a completely different file:
-      # LibPng/CMakeLists.txt (vendored, unrelated to our fix) does
-      # "set(CMAKE_C_FLAGS -DPNG_ARM_NEON_OPT=0 ${CMAKE_C_FLAGS})" - an
-      # unquoted multi-arg set(), which is CMake's semicolon-list form. That
-      # list-joined our flag onto theirs with a literal ";" instead of a
-      # space, and the compiler's own macro-expansion note confirmed the
-      # damage directly: "#define PNG_ARM_NEON_OPT 0;-Dfdopen=fdopen" - our
-      # whole flag got swallowed as part of their macro's value. Using
-      # add_compile_definitions() instead avoids this: it populates a
-      # proper CMake directory property that's expanded into individual,
-      # well-formed -D flags later, immune to another subdirectory's own
-      # string concatenation on the raw CMAKE_C_FLAGS/CMAKE_CXX_FLAGS text.
+      # Two earlier attempts to fix this via CMake variables both failed for
+      # CMake-scoping reasons rather than anything wrong with the idea
+      # itself: -DCMAKE_C_FLAGS/-DCMAKE_CXX_FLAGS collided with LibPng's own
+      # "set(CMAKE_C_FLAGS -DPNG_ARM_NEON_OPT=0 ${CMAKE_C_FLAGS})" (unquoted
+      # multi-arg set() = CMake's semicolon-list form, confirmed directly by
+      # the compiler's own macro-expansion note showing our flag swallowed
+      # into theirs: "#define PNG_ARM_NEON_OPT 0;-Dfdopen=fdopen"). Trying
+      # add_compile_definitions() via a -C preload script next seemed like
+      # it should sidestep that, but a local empirical test (a minimal
+      # add_subdirectory() project, same -C mechanism) confirmed
+      # add_compile_definitions() called from a -C script does NOT
+      # propagate into add_subdirectory()-included targets - a real CMake
+      # scoping limitation, not a variable-name collision this time.
+      # Patching the two vendored files directly, in this fresh git clone,
+      # sidesteps the entire class of CMake propagation/scoping issue: the
+      # broken line simply doesn't exist in what gets compiled, regardless
+      # of directory scope, generator, or how any other CMakeLists.txt
+      # manipulates its own flags.
       - name: build PDFWriter static libraries from source
         run: |
           set -euo pipefail
           git clone --branch 4.1 --depth 1 https://github.com/galkahana/PDF-Writer.git pdfwriter-src
-          cat > preload.cmake <<'EOF'
-          add_compile_definitions(fdopen=fdopen)
-          EOF
+          sed -i.bak '/define fdopen(fd,mode) NULL/d' \
+            pdfwriter-src/ZLib/zutil.h \
+            pdfwriter-src/FreeType/src/gzip/zutil.h
+          rm -f pdfwriter-src/ZLib/zutil.h.bak pdfwriter-src/FreeType/src/gzip/zutil.h.bak
+
           cmake -G Xcode -S pdfwriter-src -B pdfwriter-build \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ env.MACOS_DEPLOYMENT_TARGET }}" \
-            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-            -C preload.cmake
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5
           cmake --build pdfwriter-build --target PDFWriter --config Release
+
 
           mkdir -p a
           libs=(Zlib LibAesgm LibJpeg LibTiff FreeType LibPng PDFWriter)
