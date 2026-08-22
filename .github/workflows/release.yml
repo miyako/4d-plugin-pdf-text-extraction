@@ -251,6 +251,21 @@ jobs:
       # broken line simply doesn't exist in what gets compiled, regardless
       # of directory scope, generator, or how any other CMakeLists.txt
       # manipulates its own flags.
+      #
+      # LibPng/pngpriv.h has the same underlying category of bug, in a
+      # different spot: "#if (defined(__MWERKS__) && defined(macintosh)) ||
+      # defined(applec) || defined(THINK_C) || defined(__SC__) ||
+      # defined(TARGET_OS_MAC) ... #include <fp.h>" - again assuming
+      # TARGET_OS_MAC means a classic Mac OS toolchain with a <fp.h> header,
+      # which doesn't exist on modern macOS SDKs, confirmed directly in CI:
+      # "fatal error: 'fp.h' file not found". Removing TARGET_OS_MAC from
+      # that condition is safe: every other macro in the same OR-list
+      # (__MWERKS__, applec, THINK_C, __SC__) is equally obsolete and never
+      # fires on any build we'd actually run, so the block now falls
+      # through to the correct "#include <math.h>" branch unconditionally
+      # on real platforms. Checked first that TARGET_OS_MAC appears exactly
+      # once in this file, and that no other file in the vendored tree
+      # includes <fp.h>, so this is fully contained.
       - name: build PDFWriter static libraries from source
         run: |
           set -euo pipefail
@@ -258,7 +273,11 @@ jobs:
           sed -i.bak '/define fdopen(fd,mode) NULL/d' \
             pdfwriter-src/ZLib/zutil.h \
             pdfwriter-src/FreeType/src/gzip/zutil.h
-          rm -f pdfwriter-src/ZLib/zutil.h.bak pdfwriter-src/FreeType/src/gzip/zutil.h.bak
+          sed -i.bak 's/ || defined(TARGET_OS_MAC)//' \
+            pdfwriter-src/LibPng/pngpriv.h
+          rm -f pdfwriter-src/ZLib/zutil.h.bak \
+            pdfwriter-src/FreeType/src/gzip/zutil.h.bak \
+            pdfwriter-src/LibPng/pngpriv.h.bak
 
           cmake -G Xcode -S pdfwriter-src -B pdfwriter-build \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
