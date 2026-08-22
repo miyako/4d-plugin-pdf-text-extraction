@@ -266,6 +266,21 @@ jobs:
       # on real platforms. Checked first that TARGET_OS_MAC appears exactly
       # once in this file, and that no other file in the vendored tree
       # includes <fp.h>, so this is fully contained.
+      #
+      # FreeType/src/gzip/zconf.h (its own separate, much older bundled
+      # copy of zlib's zconf.h - distinct from ZLib's own modern zconf.h,
+      # which has no such guard and built fine) has the same category of
+      # bug the other way around: "#if !defined(MACOS) &&
+      # !defined(TARGET_OS_MAC) / typedef unsigned char Byte; / #endif" -
+      # it assumes that ON classic Mac OS, system headers already provide
+      # a "Byte" typedef, so it skips defining its own to avoid a conflict.
+      # TARGET_OS_MAC is unconditionally true on modern macOS too, but
+      # there's no such pre-existing "Byte" typedef from Darwin's headers,
+      # so it ends up completely undefined - confirmed directly in CI:
+      # "unknown type name 'Byte'". Removing the #if/#endif wrapper (this
+      # exact string is the only match in the whole vendored tree) makes
+      # the typedef unconditional, which is correct on every real platform
+      # we'd build on.
       - name: build PDFWriter static libraries from source
         run: |
           set -euo pipefail
@@ -275,9 +290,14 @@ jobs:
             pdfwriter-src/FreeType/src/gzip/zutil.h
           sed -i.bak 's/ || defined(TARGET_OS_MAC)//' \
             pdfwriter-src/LibPng/pngpriv.h
+          sed -i.bak '/#if !defined(MACOS) && !defined(TARGET_OS_MAC)/,/#endif/{
+            /#if !defined(MACOS) && !defined(TARGET_OS_MAC)/d
+            /#endif/d
+          }' pdfwriter-src/FreeType/src/gzip/zconf.h
           rm -f pdfwriter-src/ZLib/zutil.h.bak \
             pdfwriter-src/FreeType/src/gzip/zutil.h.bak \
-            pdfwriter-src/LibPng/pngpriv.h.bak
+            pdfwriter-src/LibPng/pngpriv.h.bak \
+            pdfwriter-src/FreeType/src/gzip/zconf.h.bak
 
           cmake -G Xcode -S pdfwriter-src -B pdfwriter-build \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
