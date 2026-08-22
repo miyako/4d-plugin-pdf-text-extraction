@@ -85,7 +85,7 @@ jobs:
           # Letting CMake auto-detect whatever VS is actually there and
           # pinning just the toolset mirrors how "build x64" below already
           # handles this same runner-version drift for MSBuild directly.
-          # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 (via preload.cmake below):
+          # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 (via preload-version.cmake below):
           # PDF-Writer's own CMakeLists.txt (and subdirectories) declare
           # cmake_minimum_required(VERSION 2.8.12). Modern CMake (this
           # runner's version, confirmed via the actual error text) hard-
@@ -93,34 +93,40 @@ jobs:
           # documented workaround for vendored projects we don't want to
           # edit, not a project-specific hack.
           #
-          # CMAKE_POLICY_DEFAULT_CMP0091=NEW plus CMAKE_MSVC_RUNTIME_LIBRARY:
-          # the plugin's own .vcxproj compiles with /MT (static CRT - visible
-          # in its CL.exe invocation), but plain CMake defaults to /MD
-          # (dynamic CRT) for MSVC, confirmed by the actual link errors this
-          # produced (LNK2038 RuntimeLibrary mismatch, plus LNK2001 on
-          # __imp_-prefixed symbols - the dynamic-CRT import-library stubs
-          # that don't exist when linking against the static CRT). CMP0091
-          # has to be forced to NEW because PDF-Writer's own declared
-          # cmake_minimum_required predates it, so it wouldn't otherwise
-          # take effect even with CMAKE_MSVC_RUNTIME_LIBRARY set.
-          #
-          # All three are written into a CMake script file and loaded with
-          # -C, rather than passed as -D command-line flags: a first attempt
-          # using quoted -D flags produced a link error byte-for-byte
-          # identical to before either fix was applied - strong evidence
-          # PowerShell's argument parsing was mangling them (it already
-          # demonstrably split an unquoted 3.5 at the decimal point earlier
-          # in this same job). A single-quoted here-string is never subject
-          # to PowerShell variable interpolation, so $<...> generator
-          # expressions and decimal values reach CMake exactly as written,
-          # regardless of command-line tokenizing quirks.
+          # CMAKE_POLICY_DEFAULT_CMP0091=NEW plus CMAKE_MSVC_RUNTIME_LIBRARY
+          # (the modern, CMake-documented mechanism for forcing the static
+          # CRT) was tried twice and produced the identical link error both
+          # times. Reading CMake's own Windows-MSVC.cmake module directly
+          # explains why: whether /MD gets baked into the flags at all is
+          # decided by CMP0091's actual state at the moment enable_language()
+          # runs (inside project()) - but a -C preload script runs BEFORE
+          # project() is ever called, so CMAKE_CXX_FLAGS_RELEASE etc. were
+          # still empty when my substitution code ran, and force-caching
+          # them to empty likely suppressed the normal _INIT seeding
+          # entirely. Two configure passes fixes this: pass 1 only sets the
+          # policy-version-minimum and lets CMake populate its real (still
+          # /MD) defaults normally; pass 2 reconfigures the now-existing
+          # build tree and substitutes /MD for /MT in the now-populated
+          # flag variables, which are guaranteed non-empty this time.
           @'
           set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "" FORCE)
-          set(CMAKE_POLICY_DEFAULT_CMP0091 NEW CACHE STRING "" FORCE)
-          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "" FORCE)
-          '@ | Set-Content -Path preload.cmake -Encoding utf8
+          '@ | Set-Content -Path preload-version.cmake -Encoding utf8
 
-          cmake -A x64 -T v143 -C preload.cmake -S pdfwriter-src -B pdfwriter-build
+          @'
+          foreach(flag_var
+              CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
+              CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO
+              CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+              CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+              if(${flag_var} MATCHES "/MD")
+                  string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+                  set(${flag_var} "${${flag_var}}" CACHE STRING "" FORCE)
+              endif()
+          endforeach()
+          '@ | Set-Content -Path fix-runtime.cmake -Encoding utf8
+
+          cmake -A x64 -T v143 -C preload-version.cmake -S pdfwriter-src -B pdfwriter-build
+          cmake -C fix-runtime.cmake pdfwriter-build
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           New-Item -ItemType Directory -Force -Path "lib\windows64" | Out-Null
