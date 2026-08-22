@@ -220,6 +220,28 @@ jobs:
       # source, mirroring the Windows job - see its comment for the full
       # explanation of the _OBJLIB naming and why building "PDFWriter" alone
       # is enough to cascade-build everything else.
+      #
+      # -DCMAKE_C_FLAGS/-DCMAKE_CXX_FLAGS=-Dfdopen=fdopen: two separate
+      # vendored copies of zlib's old zutil.h (ZLib's own, and the copy
+      # FreeType bundles under src/gzip for reading compressed PCF fonts)
+      # contain a decades-old compatibility block - "#if defined(MACOS) ||
+      # defined(TARGET_OS_MAC) ... #define fdopen(fd,mode) NULL /* No
+      # fdopen() */" - written for classic Mac OS toolchains with no real
+      # fdopen(). TARGET_OS_MAC is unconditionally true on every modern
+      # Apple platform, so this still fires today, and confirmed directly
+      # in CI: the new macOS 26.5 SDK's own <stdio.h> declares fdopen() as
+      # a real function in a way that collides with our 2-arg function-like
+      # macro, producing "error: expected identifier or '('" while parsing
+      # the SDK's own declaration. -Dfdopen=fdopen is a self-referential
+      # identity macro - it makes zutil.h's own "#ifndef fdopen" guard skip
+      # the broken redefinition (fdopen is already "defined"), without
+      # changing what fdopen actually resolves to anywhere it's genuinely
+      # called. Applied build-wide (both C and C++ flags) since it's a
+      # no-op wherever this specific bug isn't present, and safe to set
+      # directly at configure time here, unlike the per-config _RELEASE
+      # flags on the Windows job: Darwin's own platform module doesn't
+      # populate the base CMAKE_C_FLAGS/CMAKE_CXX_FLAGS with anything by
+      # default, so there's nothing to accidentally clobber.
       - name: build PDFWriter static libraries from source
         run: |
           set -euo pipefail
@@ -227,7 +249,9 @@ jobs:
           cmake -G Xcode -S pdfwriter-src -B pdfwriter-build \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ env.MACOS_DEPLOYMENT_TARGET }}" \
-            -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+            -DCMAKE_C_FLAGS="-Dfdopen=fdopen" \
+            -DCMAKE_CXX_FLAGS="-Dfdopen=fdopen"
           cmake --build pdfwriter-build --target PDFWriter --config Release
 
           mkdir -p a
